@@ -1,24 +1,15 @@
 # webshop
 
-git clone https://github.com/Digital-Media/fhooe-web-dock.git
+## Install fhooe-web-dock for Exercises
+Open Powershell (PS) or other Terminal (prompt my be different then).
+[Follow Installation Steps for fhooe-web-dock](https://github.com/Digital-Media/fhooe-web-dock/blob/main/INSTALL.md) 
+and start Containers.
 
-cd fhooe-web-dock
-
-docker compose up -d
-
+## Install webshop repo for hyp2ue Exercises
+```shell
 docker exec -it webapp /bin/bash -c "cd /var/www/html && git clone https://github.com/Digital-Media/webshop.git ."
-
 docker exec -it webapp /bin/bash -c "cd /var/www/html && composer install"
-
-Get [onlineshop.sql](https://gist.github.com/martinharrer/846dbd667e35ba8ccbe04bd96b1aadd3)
-
-docker exec -it mariadb /bin/bash -c "mariadb -uonlineshop -pgeheim </tmp/bin/onlineshop.sql"
-
-Use `wget https://gist.githubusercontent.com/martinharrer/846dbd667e35ba8ccbe04bd96b1aadd3/raw/8a0be492bd21dc6c904b4e42e3ff17d684b8978f/onlineshop.sql` to get it in linux commandline.
-
-Get [initDB()](https://gist.github.com/martinharrer/28fbd928e4129d6ea5f5dc3e3c848ecb)
-
-Use `wget https://gist.githubusercontent.com/martinharrer/28fbd928e4129d6ea5f5dc3e3c848ecb/raw/f397e788d4c332543943d6ca551ca8e74f627f23/initDB.php` to get it in linux commandline.
+```
 
 # hyp2ue_t1_ue3
 
@@ -28,3 +19,19 @@ This ist done as code along session, to get familiar with the file structure and
 We create an input form to write data to a database.
 - [Twig](https://twig.symfony.com/)
 - [Composer](https://getcomposer.org/)
+
+# hyp2ue_t2_ue5
+
+# hyp2ue_t1_ue4
+
+# hyp2ue_t2_ue6
+
+# hyp2ue_t2_ue7
+
+# hyp2ue_t2_ue8
+
+
+
+
+
+
