@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Login{% endblock title %}
+{% block main %}
+    <h1>Login</h1>
+    <div class="border p-3 mt-5">
+        {{ include('errors.html.twig') }}
+        <form method="post" action="{{ url_for("/login") }}">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ email }}"
+                       placeholder="you@example.com" aria-describedby="emailHelp" autocomplete="email" required>
+                <div id="emailHelp" class="form-text">Please enter the email address you registered with.</div>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password"
+                       placeholder="Password" aria-describedby="passwordHelp" autocomplete="current-password"
+                       required>
+                <div id="passwordHelp" class="form-text">Please enter your selected password.</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Sign in</button>
+        </form>
+    </div>
+{% endblock main %}

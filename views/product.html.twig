@@ -1,0 +1,56 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Product{% endblock title %}
+{% block main %}
+    <h1>Product</h1>
+    <div class="border p-3 mt-5">
+        {{ include('errors.html.twig') }}
+        <form method="post" action="{{ url_for("/product") }}">
+            <div class="mb-3">
+                <label for="product_name" class="form-label">Product Name</label>
+                <input type="text" class="form-control" id="product_name" name="product_name" value="{{ product_name }}"
+                       placeholder="product name" aria-describedby="product_nameHelp" autocomplete="product_name" required>
+                <div id="product_nameHelp" class="form-text">Please enter a product name.</div>
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="text" class="form-control" id="price" name="price" value="{{ price }}"
+                       placeholder="Price" aria-describedby="priceHelp" autocomplete="current-price"
+                       required>
+                <div id="priceHelp" class="form-text">Please enter a price.</div>
+            </div>
+            <div class="mb-3">
+                <label for="product_category_name" class="form-label">Product Category</label>
+                <select name="product_category_name" id="product_category_name" size="1" class="form-control">
+                    {% for key,value in productCategory %}
+                        <option {% if selected is defined %} {% if selected is same as (productCategory[key]['product_category_name'])  %} selected="selected" {% endif %} {% endif %}> {{ productCategory[key]['product_category_name'] }} </option>
+                    {% else %}
+                        <option>Nothing to select so far</option>
+                    {% endfor %}
+                </select>
+                <div id="product_category_nameHelp" class="form-text">Please choose a product category.</div>
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Active</label>
+                <input type="radio" name="active"  value="1" {% if active == '1' %} checked="checked" {% endif %}><span>&nbsp;</span>
+                <label for="price" class="form-label">Inactive</label>
+                <input type="radio" name="active"  value="0" {% if active == '0' %} checked="checked" {% endif %}><span>&nbsp;</span>
+            </div>
+            <div class="mb-3">
+                <label for="short_description" class="form-label">Short Description</label>
+                <textarea name="short_description" id="short_description" cols="80" rows="2"
+                          class="form-control" aria-describedby="shortHelp" autocomplete="current-short_description"
+                          required>{{ long_description }}</textarea>
+                <div id="shortHelp" class="form-text">Please enter a short description.</div>
+            </div>
+            <div class="mb-3">
+                <label for="long_description" class="form-label">Long Description</label>
+                <textarea name="long_description" id="long_description" cols="80" rows="5"
+                          class="form-control" aria-describedby="longHelp" autocomplete="current-long_description"
+                          required>{{ long_description }}</textarea>
+                <div id="longHelp" class="form-text">Please enter a long description.</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Product</button>
+        </form>
+    </div>
+{% endblock main %}

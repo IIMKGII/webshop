@@ -1,0 +1,11 @@
+{% extends "base.html.twig" %}
+
+{% block title %}404 - Not Found{% endblock title %}
+{% block head %}
+    {{ parent() }}
+{% endblock head %}
+{% block main %}
+<h1>404 - Not Found</h1>
+<p>This is the 404 view.</p>
+<p>It is displayed when a route is accessed that has not been defined in the router.</p>
+{% endblock main%}

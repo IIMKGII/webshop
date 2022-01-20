@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+
+{% block title %}PDO Example{% endblock title %}
+{% block main %}
+    <h1>PDO Example</h1>
+    <div class="border p-3 mt-5">
+        {{ include('errors.html.twig') }}
+        <form method="post" action="{{ url_for("/addcountry") }}">
+            <div class="mb-3">
+                <label for="country" class="form-label">Country Name</label>
+                <input type="text" class="form-control" id="country" name="country" value="{{ country }}"
+                       placeholder="country name" aria-describedby="countryHelp" autocomplete="country">
+                <div id="countryHelp" class="form-text">Please enter a country name.</div>
+            </div>
+            <div class="mb-3">
+                <label for="isocode" class="form-label">ISOcode</label>
+                <input type="text" class="form-control" id="isocode" name="isocode" value="{{ isocode }}"
+                       placeholder="isocode" aria-describedby="isocodeHelp" autocomplete="current-isocode">
+                <div id="isocodeHelp" class="form-text">Please enter an ISOcode.</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Country</button>
+        </form>
+    </div>
+    <div class="border p-3 mt-5">
+    <h2>List of Countries</h2>
+    <div>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>ISOCode</th>
+            </tr>
+            {% if countries is defined %}
+                {% for key, value in countries %}
+                    <tr>
+                        <td> {{ countries[key]['name'] }} </td>
+                        <td> {{ countries[key]['ISOcode'] }} </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td> No products found in search </td>
+                        <td>&nbsp;</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+    </div>
+    </div>
+{% endblock main %}
