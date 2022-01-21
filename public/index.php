@@ -84,20 +84,24 @@ try {
         $addcountry->isValid();
     });
 
+    $router->get("/login", function () use ($twig) {
+        $twig->display("login.html.twig");
+    });
+
     $router->get("/logout", function () use ($twig) {
         $_SESSION = [];
         if (isset($_COOKIE[session_name()])) {
             setcookie(session_name(), "", time() - 86400, "/");
         }
         session_destroy();
-        $redirect = Router::urlFor("/");
-        Router::redirectTo($redirect);
+        Router::redirectTo("/");
     });
 
     $router->get("/product", function () use ($twig) {
         if (!isset($_SESSION['isloggedin']) || $_SESSION['isloggedin'] !== Utilities::generateLoginHash()) {
             // Use this method call to enable login protection for this page
-            Router::redirectTo(Router::urlFor("/login"));
+            $_SESSION['redirect'] = "/product";
+            Router::redirectTo("/login");
         }
         $product = new Product($twig);
         $productCategory = $product->fillProductCategory();
