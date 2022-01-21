@@ -122,4 +122,5 @@ try {
     echo "<p>There is an error in " . $e->getFile() . " on line " . $e->getLine() . ".</p>";
     echo "<p>Message: " . $e->getMessage() . "</p>";
     echo "<p>Code: " . $e->getCode() . "</p>";
-    echo "<p>Trace: " . $e->getTraceAsString() . "</p>";}
+    echo "<p>Trace: " . $e->getTraceAsString() . "</p>";
+}
