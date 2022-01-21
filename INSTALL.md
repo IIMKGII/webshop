@@ -13,4 +13,4 @@ docker exec -it webapp /bin/bash -c "cd /var/www/html && composer install"
 
 ## Vagrant
 
-See [fhooe-webdev] (https://github.com/Digital-Media/fhooe-webdev)
+See [fhooe-webdev](https://github.com/Digital-Media/fhooe-webdev)
