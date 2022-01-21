@@ -1,15 +1,5 @@
 # Exercises with the webshop repo
 
-## Install fhooe-web-dock for Exercises
-Open Powershell (PS) or other Terminal (prompt my be different then).
-[Follow Installation Steps for fhooe-web-dock](https://github.com/Digital-Media/fhooe-web-dock/blob/main/INSTALL.md) 
-and start Containers.
-
-## Install webshop repo for hyp2ue Exercises
-```shell
-docker exec -it webapp /bin/bash -c "cd /var/www/html && git clone https://github.com/Digital-Media/webshop.git ."
-docker exec -it webapp /bin/bash -c "cd /var/www/html && composer install"
-```
 
 # hyp2ue_t1_ue3
 
