@@ -1,7 +1,6 @@
 # Exercises with the webshop repo
 
-## Install fhooe-web-dock for Exercises
-Open Powershell (PS) or other Terminal (prompt my be different then).
+## Installation
 [Follow Installation Steps for fhooe-web-dock](https://github.com/Digital-Media/fhooe-web-dock/blob/main/INSTALL.md) 
 and start Containers.
 
