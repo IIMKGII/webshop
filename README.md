@@ -1,5 +1,8 @@
 # Exercises with the webshop repo
 
+## Installation
+
+See [INSTALL.md](https://github.com/Digital-Media/webshop/blob/main/INSTALL.md)
 
 # hyp2ue_t1_ue3
 
