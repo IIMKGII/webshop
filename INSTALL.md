@@ -12,6 +12,9 @@ docker exec -it webapp /bin/bash -c "cd /var/www/html && git clone https://githu
 ```shell
 docker exec -it webapp /bin/bash -c "cd /var/www/html && composer install"
 ```
+```shell
+docker exec -it webapp /bin/bash -c "cd /var/www/html && composer update"
+```
 
 ## Vagrant
 
