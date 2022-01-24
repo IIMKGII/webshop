@@ -10,7 +10,7 @@ See [fhooe-web-dock](https://github.com/Digital-Media/fhooe-web-dock)
 docker exec -it webapp /bin/bash -c "cd /var/www/html && git clone https://github.com/Digital-Media/webshop.git ."
 ```
 ```shell
-docker exec -it webapp /bin/bash -c "cd /var/www/html/webshop && composer install"
+docker exec -it webapp /bin/bash -c "cd /var/www/html && composer install"
 ```
 
 ## Vagrant
