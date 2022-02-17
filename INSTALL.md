@@ -11,19 +11,6 @@ See [fhooe-web-dock](https://github.com/Digital-Media/fhooe-web-dock)
 If you use private repos built by [Upper Austria University of Applied Sciences (FH Oberösterreich), Hagenberg Campus](https://www.fh-ooe.at/en/hagenberg-campus/).
 
 ```shell
-docker exec -it webapp-pre /bin/bash -c "cd /var/www/html && git clone https://github.com/Digital-Media/webshop.git"
-```
-```shell
-docker exec -it webapp-pre /bin/bash -c "cd /var/www/html/webshop && composer install"
-```
-```shell
-docker exec -it webapp-pre /bin/bash -c "cd /var/www/html/webshop && composer update"
-```
-### Using verified images from Docker Hub and build layers during docker compose up -d
-
-To use varified images from [Docker Hub](htts://hub.docker.com) with layers built during docker compose up -d
-
-```shell
 docker exec -it webapp /bin/bash -c "cd /var/www/html && git clone https://github.com/Digital-Media/webshop.git"
 ```
 ```shell
@@ -31,6 +18,19 @@ docker exec -it webapp /bin/bash -c "cd /var/www/html/webshop && composer instal
 ```
 ```shell
 docker exec -it webapp /bin/bash -c "cd /var/www/html/webshop && composer update"
+```
+### Using verified images from Docker Hub and build layers during docker compose up -d
+
+To use varified images from [Docker Hub](htts://hub.docker.com) with layers built during docker compose up -d
+
+```shell
+docker exec -it webapp-l /bin/bash -c "cd /var/www/html && git clone https://github.com/Digital-Media/webshop.git"
+```
+```shell
+docker exec -it webapp-l /bin/bash -c "cd /var/www/html/webshop && composer install"
+```
+```shell
+docker exec -it webapp-l /bin/bash -c "cd /var/www/html/webshop && composer update"
 ```
 
 ## Vagrant
