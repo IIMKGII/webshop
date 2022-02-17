@@ -11,7 +11,7 @@
 <header>
   <nav class="navbar navbar-light">
     <div class="container-lg">
-	  <a class="navbar-brand" href="/public">
+	  <a class="navbar-brand" href="/webshop/public">
           <img src="views/images/fhooe.svg" alt="" height="30" class="d-inline-block align-text-top">
           GoTo Webshop &nbsp;
       </a>
