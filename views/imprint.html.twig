@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Imprint{% endblock title %}
+{% block head %}
+    {{ parent() }}
+    <style type = "text/css">
+        .important {color: #336699;}
+    </style>
+{% endblock head %}
+{% block header %}
+    <nav class = "navbar navbar-expand-lg navbar-light bg-light">
+        <div class = "container-lg">
+            <a class = "navbar-brand" href ="{{ get_base_path() }}/">
+                <img src = "{{ get_base_path() }}/../views/images/fhooe.svg" alt = ""
+                     height = "30" class = "d-inline-block align-text-top">
+                fhooe/router-skeleton
+            </a>
+        </div>
+    </nav>
+{% endblock header %}
+{% block main %}
+    <h1>Imprint</h1>
+    {{ imprint | raw }}
+{% endblock main %}

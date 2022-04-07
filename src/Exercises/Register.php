@@ -54,11 +54,32 @@ final class Register
      */
     public function isValid(): void
     {
+        if (Utilities::isEmptyString($_POST['email'])){
+            $this->messages['email'] = "Please enter your email address.";
+        }
+        if (!Utilities::isEmptyString($_POST['email']) && !Utilities::isEmail($_POST['email'])){
+            $this->messages['email'] = "Please enter a valid email address.";
+        }
+        if(!Utilities::isEmptyString($_POST['email']) && !$this->isUniqueEmail()) {
+            $this->messages['email'] = "A user with this e-mail address is already registered.";
+        }
+        if(Utilities::isEmptyString($_POST['password'])) {
+            $this->messages['password'] = "Please enter a password";
+        }
+        if (!Utilities::isEmptyString($_POST['password']) && !Utilities::isPassword($_POST['password'],2,8)){
+            $this->messages['password'] = "Please enter a valid password";
+        }
+        if (Utilities::isEmptyString($_POST['password2'])){
+            $this->messages['password2'] = "Please repeat your password";
+        }
+        if ($_POST['password']!==$_POST['password2']){
+            $this->messages['password2'] = "Please repeat the same password";
+        }
         if ((count($this->messages) === 0)) {
             $this->business();
         } else {
-            $this->twigParams['email']= $_POST['email'];
-            $this->twigParams['messages']= $this->messages;
+            $this->twigParams['email'] = $_POST['email'];
+            $this->twigParams['messages'] = $this->messages;
             $this->twig->display("register.html.twig", $this->twigParams);
         }
     }
@@ -73,7 +94,8 @@ final class Register
      */
     protected function business(): void
     {
-        $this->twig->display("index.html.twig");
+        $this->addUser();
+        $this->twig->display("login.html.twig", $this->twigParams);
     }
 
     /**
@@ -84,7 +106,18 @@ final class Register
      */
     private function isUniqueEmail(): bool
     {
-            return true;
+        $query = /** @lang MySQL */
+            <<<SQL
+                SELECT email from user
+                where email = :email;
+SQL;
+        if ($this->dbh) {
+            $this->stmt = $this->dbh->prepare($query);
+            $this->stmt->bindValue(':email' , $_POST['email'], PDO::PARAM_STR);
+            $this->stmt->execute();
+            $result = $this->stmt->fetchAll();
+        }
+        return (count($result))===0;
     }
 
     /**
@@ -107,29 +140,44 @@ final class Register
     private function addUser(): void
     {
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-        $active = md5(uniqid(rand(), true));
+        //$active = md5(uniqid(rand(), true));
         $query = /** @lang MySQL */
             <<<SQL
                  INSERT INTO user 
-                 SET email = :email,
-                     active = :active,
+                 SET email = :email, 
                      password = :password
 SQL;
         if ($this->dbh) {
             $this->stmt = $this->dbh->prepare($query);
-            // PDO::PARAM_FLOAT/DECIMAL/DATE do not exist, PDO::PARAM_INT is only relevant for PK/FK
-            // oder wenn die Datenbank keine Implizite Typkonvertierung entsprechend der Tabellendefinition vornimmt
-            // You can omit bindValue, because the default type in $stmt->execute() is PDO::PARAM_STR
-            // You definitely need bindValue for a LIMIT clause,  PDO::PARAM_INT is required for offset and rowcount.
-            // --> executeStmt($params)
-            // bindValue() is used instead of bindParam(),
-            // because bindParam() is only needed for INPUT/OUTPUT parameters f.e. used in stored procedures
-            // With bindParam() values can be overwritten between bind() and execute().
-            // That is not, what we need in our use cases.
             $this->stmt->bindValue(':email' , $_POST['email'], PDO::PARAM_STR);
-            $this->stmt->bindValue(':active' , $active, PDO::PARAM_STR);
+            //$this->stmt->bindValue(':active' , $active, PDO::PARAM_STR);
             $this->stmt->bindValue(':password' , $password, PDO::PARAM_STR);
-            $this->stmt->execute();
+            $params = [":email" => $_POST['email'],":password"=>$password];
+            $this->stmt->execute($params);
         }
     }
+    private function initDB(): void
+    {
+        $charsetAttr="SET NAMES utf8 COLLATE utf8_general_ci";
+        $dsn="mysql:host=db;port=3306;dbname=onlineshop";
+        $mysqlUser="onlineshop";
+        $mysqlPwd="geheim";
+        $multi=false;
+        $options = array(
+            // A warning is given for persistent connections in case of a interrupted database connection.
+            // This warning is shown on the web page if error_reporting=E_ALL is set in php.ini
+            PDO::ATTR_PERSISTENT => true,
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            // PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+            // PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_NUM,
+            // PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_BOTH,
+            PDO::MYSQL_ATTR_INIT_COMMAND => $charsetAttr,
+            PDO::MYSQL_ATTR_MULTI_STATEMENTS => $multi
+        );
+        $this->dbh = new PDO($dsn, $mysqlUser, $mysqlPwd, $options);
+    }
+
+
+
 }

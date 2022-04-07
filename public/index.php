@@ -41,15 +41,15 @@ try {
 #    $utilties = new Utilities();
 
 // Create a monolog instance for logging in the skeleton. Pass it to the router to receive its log messages too.
-    $logger = new Logger("skeleton-logger");
-    $logger->pushHandler(new StreamHandler(__DIR__ . "/../logs/router.log"));
-    $router->setLogger($logger);
+    //$logger = new Logger("skeleton-logger");
+    //$logger->pushHandler(new StreamHandler(__DIR__ . "/../logs/router.log"));
+    //$router->setLogger($logger);
 
 // Create a new twig instance for advanced templates.
     $twig = new Environment(
         new FilesystemLoader("../views"),
         [
-            "cache" => "../cache",
+            //"cache" => "../cache",
             "auto_reload" => true,
             "debug" => true
         ]
@@ -84,8 +84,33 @@ try {
         $addcountry->isValid();
     });
 
+    $router->get("/imprint", function () use ($twig) {
+        $imprint = <<<IMPRINT
+    <pre class = "important">
+    Distribution of My Best Pictures
+    Main Road 1
+    1234 Timbuktu
+    Mali </pre>
+    IMPRINT;
+        $twig->display("imprint.html.twig", ["imprint" => $imprint]);
+    });
+
+    $router->get("/register",function() use ($twig){
+        $twig->display("register.html.twig");
+    });
+
+    $router->post("/register", function() use ($twig) {
+        $register = new register($twig);
+        $register->isValid();
+    });
+
     $router->get("/login", function () use ($twig) {
         $twig->display("login.html.twig");
+    });
+
+    $router->post("/login", function() use ($twig) {
+        $login = new login($twig);
+        $login->isValid();
     });
 
     $router->get("/logout", function () use ($twig) {
