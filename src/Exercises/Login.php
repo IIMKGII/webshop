@@ -83,6 +83,18 @@ final class Login
     public function isValid(): void
     {
         if ((count($this->messages) === 0)) {
+            if (Utilities::isEmptyString($_POST['email'])){
+                $this->messages['email'] = "Please enter your email address.";
+            }
+            if (!Utilities::isEmptyString($_POST['email']) && !Utilities::isEmail($_POST['email'])){
+                $this->messages['email'] = "Please enter a valid email address.";
+            }
+            if(Utilities::isEmptyString($_POST['password'])) {
+                $this->messages['password'] = "Please enter a password";
+            }
+            if (!Utilities::isEmptyString($_POST['password']) && !Utilities::isPassword($_POST['password'],2,8)){
+                $this->messages['password'] = "Please enter a valid password";
+            }
             if (!$this->authenticateUser()) {
                 $this->messages['nologin'] = "Invalid user name or password or account has not been activated yet.";
             } else {
@@ -166,6 +178,18 @@ SQL;
      */
     private function updateCart($old_session_id, $new_session_id): void
     {
+        {
+            $query = <<<SQL
+        UPDATE cart
+        SET session_id = :new_session_id
+        where session_id = :session_id
+SQL;
+            $params = array(':session_id' => $old_session_id,':new_session_id' => $new_session_id);
+            if ($this->dbh) {
+                $this->stmt = $this->dbh->prepare($query);
+                $this->stmt->execute($params);
+            }
+        }
     }
 
     /**
@@ -175,5 +199,15 @@ SQL;
      */
     private function updateUser($password): void
     {
+        $query = <<<SQL
+        UPDATE user
+        SET password = :password
+        where email = :email
+SQL;
+        $params = array(':email' => $_POST['email'],':password' => $password);
+        if ($this->dbh) {
+            $this->stmt = $this->dbh->prepare($query);
+            $this->stmt->execute($params);
+        }
     }
 }

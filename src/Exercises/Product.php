@@ -181,7 +181,7 @@ SQL;
             $this->stmt->execute();
             $result = $this->stmt->fetchAll();
         }
-        return (count($result))===0;
+        return (count($result))>0;
     }
 
     /**
