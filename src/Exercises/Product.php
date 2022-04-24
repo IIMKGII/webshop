@@ -93,7 +93,7 @@ final class Product
         if (!Utilities::isInt($_POST['price'])){
             $this->messages['price'] = "Please enter a valid price.";
         }
-        if (isset($_POST['active'])){
+        if (!isset($_POST['active'])){
             $this->messages['active'] = "Please select active/inactive";
         }
         if (Utilities::isEmptyString($_POST['short_description'])){
